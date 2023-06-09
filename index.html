@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script defer src="face-api.min.js"></script>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+    }
+
+  </style>
+</head>
+<body>
+  <div id="emoji-list" style="display: flex;text-align: center;">
+    <div style="margin: 0 20px;">
+      <img id="first" src="" width="100" alt="emoji"><br>
+      <span id="first-text"></span>
+    </div>
+    <div style="margin: 0 20px;">
+      <img id="second" src="" width="100" alt="emoji"><br>
+      <span id="second-text"></span>
+    </div>
+    <div style="margin: 0 20px;">
+      <img id="third" src="" width="100" alt="emoji"><br>
+      <span id="third-text"></span>
+    </div>
+  </div>
+  <button id="random-btn">Start random</button>
+  <div style="position: relative;width: 400px;height: 400px;background-color: black;">
+    <div style="position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);">
+      <button id="start-btn" style="display: none;">Start</button>
+      <h1 id="timer" style="color: white;"></h1>
+    </div>
+    <img id="emoji" src="" width="75" style="position: absolute;bottom:10px;left: 10px;display: none;" alt="emoji">
+    <video id="video" width="100%" height="100%" autoplay muted style="display: none;"></video>
+  </div>
+  <button id="capture-btn">Capture</button>
+  <button id="download-btn">Download</button>
+  <br>
+  <canvas id="canvas" width="1200" height="4000" style="width: 100%;"></canvas>
+  <script defer src="capture.js"></script>
+</body>
+</html>
