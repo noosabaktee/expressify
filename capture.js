@@ -1,21 +1,55 @@
-function detectFace(){
-    // Countdown
-    let timer = time
-    setInterval(() => { 
-        if(img < 3){
-            if(timer == 0){
-                capture()
-                timer = time
-            }else if(timer > 0){
-                timer -= 1
-            }         
-            timerCam.innerHTML = timer
-            if(img >= 3){
-                timerCam.innerHTML = ""
+
+let exp
+let expressions = ["neutral", "happy","sad","angry","fearful","disgusted","surprised"]
+let ready = false
+let emoji = []
+let canvas = document.querySelector("#canvas");
+let img = 0
+let time = 3
+
+let startBtn = document.querySelector("#start-btn")
+let webCam = document.querySelector("#video") 
+let emojiCam = document.querySelector("#emoji")
+let randomBtn = document.querySelector("#random-btn")
+let timerCam = document.querySelector("#timer")
+let imgRes = document.querySelector("#result-img")
+let yourExpression = document.querySelector("#exp")
+
+setInterval(() => { 
+    if(exp && ready){
+        if(exp == emoji[img]){
+            if(img < 3){
+                if(time == 0){
+                    timerCam.innerHTML = ""
+                    capture()
+                }else if(time > 0){
+                    time -= 1
+                }         
+                timerCam.innerHTML = time + 1
             }
+            // if(img >= 3){
+            //     ready = false
+            //     timerCam.innerHTML = ""
+            // }
+        }else{
+            time = 3
+            timerCam.innerHTML = ""
         }
-    }, 1000);
-}
+    }
+}, 1000);
+
+const video = document.getElementById('video')
+
+Promise.all([
+  faceapi.nets.tinyFaceDetector.loadFromUri('/models'),
+  faceapi.nets.faceLandmark68Net.loadFromUri('/models'),
+  faceapi.nets.faceRecognitionNet.loadFromUri('/models'),
+  faceapi.nets.faceExpressionNet.loadFromUri('/models')
+]).then(
+    // kalau sudah ready
+    console.log("ready")
+)
+
 
 function startVideo() {
     navigator.getUserMedia(
@@ -23,11 +57,36 @@ function startVideo() {
       stream => {
         window.localStream = stream;
         video.srcObject = stream
-        // detectFace()
     },
       err => console.error(err)
     )
 }
+
+function getMaxValueKey(obj){
+    return Object.keys(obj).reduce(function(a, b){ return obj[a] > obj[b] ? a : b });
+}
+
+video.addEventListener('play', () => {
+    const canvasVideo = faceapi.createCanvasFromMedia(video)
+    document.body.append(canvasVideo)
+    const displaySize = { width: video.width, height: video.height }
+    faceapi.matchDimensions(canvasVideo, displaySize)
+    setInterval(async () => {
+        if(ready){
+            const detections = await faceapi.detectAllFaces(video, new faceapi.TinyFaceDetectorOptions()).withFaceLandmarks().withFaceExpressions()
+            const resizedDetections = faceapi.resizeResults(detections, displaySize)
+            canvasVideo.getContext('2d').clearRect(0, 0, canvasVideo.width, canvasVideo.height)
+            // faceapi.draw.drawDetections(canvasVideo, resizedDetections)
+            // faceapi.draw.drawFaceLandmarks(canvasVideo, resizedDetections)
+            // faceapi.draw.drawFaceExpressions(canvasVideo, resizedDetections)
+            if(resizedDetections[0]){
+                exp = getMaxValueKey(resizedDetections[0]["expressions"])
+            }
+            yourExpression.innerHTML = exp 
+        }
+    }, 100)
+})
+
 
 function getRandom(arr, n) {
     var result = new Array(n),
@@ -43,18 +102,6 @@ function getRandom(arr, n) {
     return result;
 }
   
-let expressions = ["neutral", "happy","sad","angry","fearful","disgusted","surprised"]
-
-let emoji = []
-let canvas = document.querySelector("#canvas");
-let img = 0
-let time = 5
-
-let startBtn = document.querySelector("#start-btn")
-let webCam = document.querySelector("#video") 
-let emojiCam = document.querySelector("#emoji")
-let randomBtn = document.querySelector("#random-btn")
-let timerCam = document.querySelector("#timer")
 function setEmojiCamera(){
     // Set emoji on camera
     if(img < 3){
@@ -64,7 +111,7 @@ function setEmojiCamera(){
 
 // add background
 var background = new Image();
-background.src = "bg.jpg";
+background.src = "src/assets/bg.svg";
 background.onload = function(){
     canvas.getContext('2d').drawImage(background, 0, 0, canvas.width, canvas.height);
 }
@@ -78,21 +125,31 @@ function capture(){
         canvas.getContext('2d').drawImage(video, 100, position, 1000, 1000);
         // Add emoji to canvas
         canvas.getContext('2d').drawImage(emojiPic, 150, position+750, 200, 200);
-
+        
         // Url hasil
         image_data_url = canvas.toDataURL('image/jpeg',3);
-        
+
+        // Add photo to result img
+        var imgCap = document.createElement("canvas")
+        imgCap.width = video.width*5
+        imgCap.height = video.height*5
+        imgCap.getContext('2d').drawImage(video, 0, 0, video.width*5, video.height*5);
+        var imgEl = document.createElement("img")
+        imgEl.style.width = "30%"
+        imgEl.style.margin = "0 10px"
+        imgEl.src = imgCap.toDataURL('image/jpeg')
+        imgRes.appendChild(imgEl)
     }
     img += 1
     setEmojiCamera()
     if(img >= 3) {
-        canvas.style.display = "block"
         // Stop 
+        ready = false
         localStream.getVideoTracks()[0].stop();
         video.src = '';
         webCam.style.display = "none"
         emojiCam.style.display = "none"
-        startBtn.innerHTML = "restart"
+        startBtn.firstChild.src = "src/assets/Restart.svg"
         startBtn.style.display = "block"
         randomBtn.style.display = "block"
     }
@@ -114,6 +171,8 @@ document.querySelector("#download-btn").addEventListener('click', function() {
 
 
 startBtn.addEventListener("click", function(){
+    imgRes.innerHTML = ""
+    ready = true
     img = 0
     setEmojiCamera()
     randomBtn.style.display = "none"
