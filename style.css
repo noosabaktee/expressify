@@ -7,16 +7,15 @@
 .emoji-list{
     display: block;
     text-align: center;
-    margin-top:50px;
-    margin-right: 20px;
+    margin: 0 auto;
 }
 
 .emoji{
     width: 100%;
-    margin: 50px auto;
+    margin: 25px auto;
 }
 .emoji img{
-    width: 100%;
+    width: 80%;
 }
 .webcam{
     position: relative;
@@ -55,6 +54,28 @@
     transform: translate(-50%, -50%);
 }
 
+#download-btn{
+    border: none;
+    background-color: #2051CF;
+    color: white;
+    width: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    display: none;
+}
+
+#random-btn{
+    display: block;
+    margin: 10px auto;
+    background-color: #2051CF;
+    border: none;
+    color: white;
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
 @media only screen and (max-width : 480px) {
     .container{
         display: block;
@@ -68,9 +89,6 @@
     .emoji{
         margin: 0 auto;
         width: 30%;
-    }
-    .emoji img{
-        width: 70%;
     }
     .webcam{
         position: relative;
