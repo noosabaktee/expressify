@@ -4,8 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Document</title>
+  <title>Expressify - Mood</title>
   <script defer src="face-api.min.js"></script>
+  <link rel="stylesheet" href="style.css">
   <style>
     body {
       margin: 0;
@@ -15,44 +16,42 @@
   </style>
 </head>
 <body>
-  <div id="container" style="display: flex;width: 600px;margin: 0 auto;">
-    <div id="left">
+  <div class="container"">
+    <div class="left">
       <!-- emoji -->
-      <div id="emoji-list" style="display: block;text-align: center;margin-top:75px;margin-right: 20px;">
-        <div class="emoji" style="margin: 50px auto;">
-          <img id="first" src="src/assets/None.svg" width="100" alt="emoji"><br>
+      <div class="emoji-list">
+        <div class="emoji">
+          <img id="first" src="src/assets/None.svg" alt="emoji"><br>
           <span id="first-text">none</span>
         </div>
-        <div class="emoji" style="margin: 50px auto;">
-          <img id="second" src="src/assets/None.svg" width="100" alt="emoji"><br>
+        <div class="emoji">
+          <img id="second" src="src/assets/None.svg" alt="emoji"><br>
           <span id="second-text">none</span>
         </div>
-        <div class="emoji" style="margin: 50px auto;">
-          <img id="third" src="src/assets/None.svg" width="100" alt="emoji"><br>
+        <div class="emoji">
+          <img id="third" src="src/assets/None.svg" alt="emoji"><br>
           <span id="third-text">none</span>
         </div>
       </div>
       <button id="random-btn">Start random</button>
     </div>
 
-    <div id="right">
-      <p>Your Expression: <span id="exp">undefined</span></p>
+    <div class="right">
       <!-- camera -->
-      <div style="position: relative;width: 600px;height: 600px;background-color: black;">
-        <div style="position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);">
-          <button id="start-btn" style="display: none;background-color: transparent;border: none;cursor: pointer;"><img src="src/assets/Start.svg" alt="" width="100"></button>
+      <div class="webcam">
+        <div class="center-el-webcam">
+          <button class="play-btn"><img src="src/assets/Start.svg" alt="" width="100"></button>
           <h1 id="timer" style="color: white;"></h1>
         </div>
-        <img id="emoji" src="" width="75" style="position: absolute;bottom:10px;left: 10px;display: none;" alt="emoji">
+        <p style="color: black;position: absolute;top:-12px;left: 5px;background-color: white;padding: 5px;border-radius: 3px;opacity: 50%;display: none;">your expression: <span id="exp">undefined</span></p>
+        <img id="emoji-capture" src="" alt="emoji">
         <video id="video" width="100%" height="100%" autoplay muted style="display: none;"></video>
+
       </div>
       <!-- end camera -->
-    
+      
       <!-- result img -->
-      <div id="result-img" style="display: flex;justify-content: center;align-items: center;padding: 10px 0;margin-top: 10px;"></div>
+      <div id="result-img"></div>
       <!-- end result img -->
     
       <button id="capture-btn">Capture</button>

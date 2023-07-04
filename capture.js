@@ -7,38 +7,14 @@ let canvas = document.querySelector("#canvas");
 let img = 0
 let time = 3
 
-let startBtn = document.querySelector("#start-btn")
-let webCam = document.querySelector("#video") 
-let emojiCam = document.querySelector("#emoji")
+let startBtn = document.querySelector(".play-btn")
+let video = document.querySelector("#video") 
+let webCam = document.querySelector(".webcam")
+let emojiCam = document.querySelector("#emoji-capture")
 let randomBtn = document.querySelector("#random-btn")
 let timerCam = document.querySelector("#timer")
 let imgRes = document.querySelector("#result-img")
 let yourExpression = document.querySelector("#exp")
-
-setInterval(() => { 
-    if(exp && ready){
-        if(exp == emoji[img]){
-            if(img < 3){
-                if(time == 0){
-                    timerCam.innerHTML = ""
-                    capture()
-                }else if(time > 0){
-                    time -= 1
-                }         
-                timerCam.innerHTML = time + 1
-            }
-            // if(img >= 3){
-            //     ready = false
-            //     timerCam.innerHTML = ""
-            // }
-        }else{
-            time = 3
-            timerCam.innerHTML = ""
-        }
-    }
-}, 1000);
-
-const video = document.getElementById('video')
 
 Promise.all([
   faceapi.nets.tinyFaceDetector.loadFromUri('/models'),
@@ -82,9 +58,29 @@ video.addEventListener('play', () => {
             if(resizedDetections[0]){
                 exp = getMaxValueKey(resizedDetections[0]["expressions"])
             }
-            yourExpression.innerHTML = exp 
+            if(exp && ready){
+                yourExpression.innerHTML = exp 
+                if(exp == emoji[img]){
+                    if(img < 3){
+                        if(time == 0){
+                            timerCam.innerHTML = ""
+                            capture()
+                        }else if(time > 0){
+                            time -= 1
+                        }         
+                        timerCam.innerHTML = time + 1
+                    }
+                    // if(img >= 3){
+                    //     ready = false
+                    //     timerCam.innerHTML = ""
+                    // }
+                }else{
+                    time = 3
+                    timerCam.innerHTML = ""
+                }
+            }
         }
-    }, 100)
+    }, 1000)
 })
 
 
@@ -147,7 +143,8 @@ function capture(){
         ready = false
         localStream.getVideoTracks()[0].stop();
         video.src = '';
-        webCam.style.display = "none"
+        yourExpression.parentElement.style.display = "none"
+        video.style.display = "none"
         emojiCam.style.display = "none"
         startBtn.firstChild.src = "src/assets/Restart.svg"
         startBtn.style.display = "block"
@@ -171,6 +168,7 @@ document.querySelector("#download-btn").addEventListener('click', function() {
 
 
 startBtn.addEventListener("click", function(){
+    yourExpression.parentElement.style.display = "block"
     imgRes.innerHTML = ""
     ready = true
     img = 0
@@ -178,7 +176,7 @@ startBtn.addEventListener("click", function(){
     randomBtn.style.display = "none"
     emojiCam.style.display = "block"
     this.style.display = "none"
-    webCam.style.display = "block"
+    video.style.display = "block"
     startVideo()
 })
 

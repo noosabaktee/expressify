@@ -1,0 +1,90 @@
+.container{
+    display: flex;
+    width: 600px;
+    margin: 0 auto;
+}
+
+.emoji-list{
+    display: block;
+    text-align: center;
+    margin-top:50px;
+    margin-right: 20px;
+}
+
+.emoji{
+    width: 100%;
+    margin: 50px auto;
+}
+.emoji img{
+    width: 100%;
+}
+.webcam{
+    position: relative;
+    width: 500px;
+    height: 500px;
+    background-color: black;
+}
+
+.play-btn{
+    display: none;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+#emoji-capture{
+    position: absolute;
+    bottom:10px;
+    left: 10px;
+    display: none;
+    width: 75px;
+}
+
+#result-img{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 0;
+    margin-top: 10px;
+}
+
+.center-el-webcam{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+@media only screen and (max-width : 480px) {
+    .container{
+        display: block;
+        width: 90%;
+    }
+    .emoji-list{
+        display: flex;
+        margin-top:10px;
+        margin-right: 0px;
+    }
+    .emoji{
+        margin: 0 auto;
+        width: 30%;
+    }
+    .emoji img{
+        width: 70%;
+    }
+    .webcam{
+        position: relative;
+        width: 90vw;
+        height: 90vw;
+        margin: 0 auto;
+    }
+    .play-btn img{
+        width: 50%;
+    }
+    #result-img img{
+        margin: 0 5px !important;
+    }
+    #emoji-capture{
+        width: 50px;
+    }
+}
