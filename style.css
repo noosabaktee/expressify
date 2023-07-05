@@ -1,3 +1,19 @@
+*{
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+}
+
+#title{
+    font-size: 28px;
+    text-align: center;
+    margin-left: 100px;
+    margin-top: 10px;
+}
+
 .container{
     display: flex;
     width: 600px;
@@ -7,12 +23,12 @@
 .emoji-list{
     display: block;
     text-align: center;
-    margin: 0 auto;
+    margin: 25px auto;
 }
 
 .emoji{
     width: 100%;
-    margin: 25px auto;
+    margin: 40px auto;
 }
 .emoji img{
     width: 80%;
@@ -25,10 +41,14 @@
 }
 
 .play-btn{
-    display: none;
     background-color: transparent;
     border: none;
     cursor: pointer;
+}
+
+.play-btn:disabled{
+    opacity: 75%;
+    cursor: auto;
 }
 
 #emoji-capture{
@@ -66,17 +86,33 @@
 }
 
 #random-btn{
-    display: block;
-    margin: 10px auto;
-    background-color: #2051CF;
-    border: none;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    margin: 80px auto;
+    background-color: transparent;
+    border: 2px solid white;
     color: white;
-    padding: 10px;
+    padding: 7px;
     cursor: pointer;
     border-radius: 5px;
 }
 
-@media only screen and (max-width : 480px) {
+#random-btn:hover{
+    background-color: white;
+    border: none;
+    color: black;
+}
+
+#random-btn:disabled{
+    opacity: 75%;
+}
+
+@media only screen and (max-width : 480px) { 
+    #title{
+        margin-left: 0px;
+    }
     .container{
         display: block;
         width: 90%;

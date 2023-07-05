@@ -4,26 +4,19 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Expressify - Mood</title>
+  <title>Expressify Mood</title>
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
   <script defer src="face-api.min.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
-  <style>
-    body {
-      margin: 0;
-      padding: 0;
-    }
-
-  </style>
 </head>
 <body>
-  <div id="loading" style="position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%); 
-">Loading......</div>
+  <div id="loading" style="position: absolute;top: 50%;left: 50%;transform: translate(-50%, -50%);">Loading......</div>
   <section id="content" style="display: none;">
 
-    <h1 style="text-align: center;">Expressify Mood</h1>
+    <h1 id="title">Expressify Mood <br> 😂😡😭🙂😮🤮😨 </h1>
     <div class="container">
       <div class="left">
         <!-- emoji -->
@@ -41,17 +34,16 @@
             <span id="third-text">none</span>
           </div>
         </div>
-        <button id="random-btn">get emoji</button>
       </div>
-  
+      
       <div class="right">
         <!-- camera -->
         <div class="webcam">
           <div class="center-el-webcam">
-            <button class="play-btn"><img src="src/assets/Start.svg" alt="" width="100"></button>
+            <button class="play-btn" disabled><img src="src/assets/Take.svg" alt="" width="100"></button>
             <h1 id="timer" style="color: white;"></h1>
           </div>
-          <!-- <p style="color: white; position: absolute;top: 50%;left: 50%;transform: translate(-50%, -50%);">Click "get emoji" button to get your emoji</p> -->
+          <button id="random-btn">random emoji</button>
           <p style="color: black;position: absolute;top:-12px;left: 5px;background-color: white;padding: 5px;border-radius: 3px;opacity: 50%;display: none;">your expression: <span id="exp">undefined</span></p>
           <img id="emoji-capture" src="" alt="emoji">
           <video id="video" width="100%" height="100%" autoplay muted style="display: none;"></video>
@@ -62,8 +54,11 @@
         <div id="result-img"></div>
         <!-- end result img -->
       
-        <button id="capture-btn">Capture</button>
+        <button id="capture-btn" style="display: none;">Capture</button>
         <button id="download-btn">Download</button>
+        <footer style="text-align: center;">
+          <p><b>Made with ❤️ by </b><a href="https://instagram.com/noosabaktee" target="_blank" style="text-decoration: none;color: 2051CF;">Rama Nusa Bakti</a></p>
+        </footer>
       </div>
     </div>
     <br>

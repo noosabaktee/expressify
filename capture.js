@@ -144,6 +144,8 @@ function capture(){
         var imgEl = document.createElement("img")
         imgEl.style.width = "30%"
         imgEl.style.margin = "0 10px"
+        imgEl.style.cursor = "pointer"
+        imgEl.onclick = downloadImg
         imgEl.src = imgCap.toDataURL('image/jpeg')
         imgRes.appendChild(imgEl)
     }
@@ -196,42 +198,54 @@ startBtn.addEventListener("click", function(){
 })
 
 // Start random
-var firstRand, secondRand, thirdRand
+var firstRand, secondRand, thirdRand, randomInt
 randomBtn.addEventListener("click", function(){
+    startBtn.disabled = "true"
     randomBtn.disabled = "true"
     emoji = getRandom(expressions, 3)
+    // Random untuk emoji pertama setiap 0.1 detik
     firstRand = setInterval(() => {
-        first.src = expList[expressions[Math.floor(Math.random() * 7)]].src
+        randomInt = Math.floor(Math.random() * 7)
+        first.src = expList[expressions[randomInt]].src
+        document.querySelector("#first-text").innerHTML = expressions[randomInt]
     },100)
     setTimeout(() => {
+        // dalam waktu 0.5 detik sudahi random dan pilih emoji 
         clearInterval(firstRand)
         first.setAttribute("src", expList[emoji[0]].src)
-        first.onload =  function() { 
-            document.querySelector("#first-text").innerHTML = emoji[0]
-        }
+        document.querySelector("#first-text").innerHTML = emoji[0]
+        // Random untuk emoji kedua setiap 0.1 detik
         secondRand = setInterval(() => {
-            second.src = expList[expressions[Math.floor(Math.random() * 7)]].src
+            randomInt = Math.floor(Math.random() * 7)
+            second.src = expList[expressions[randomInt]].src
+            document.querySelector("#second-text").innerHTML = expressions[randomInt]
         },100)
     }, 500);
     setTimeout(() => {
+        // dalam waktu 1 detik sudahi random dan pilih emoji 
         clearInterval(secondRand)
         second.setAttribute("src", expList[emoji[1]].src)
-        second.onload =  function() { 
-            document.querySelector("#second-text").innerHTML = emoji[1]
-        }
+        document.querySelector("#second-text").innerHTML = emoji[1]
+        // Random untuk emoji pertama setiap 0.1 detik
         thirdRand = setInterval(() => {
-            third.src = expList[expressions[Math.floor(Math.random() * 7)]].src
+            randomInt = Math.floor(Math.random() * 7)
+            third.src = expList[expressions[randomInt]].src
+            document.querySelector("#third-text").innerHTML = expressions[randomInt]
         },100)
     }, 1000);
     setTimeout(() => { 
+        // dalam waktu 1.5 detik sudahi random dan pilih emoji 
         clearInterval(thirdRand)
         third.setAttribute("src", expList[emoji[2]].src)
-        third.onload =  function() { 
-            document.querySelector("#third-text").innerHTML = emoji[2]
-            randomBtn.removeAttribute('disabled')
-            startBtn.style.display = "block"
-        }
+        document.querySelector("#third-text").innerHTML = emoji[2]
+        randomBtn.removeAttribute('disabled')
+        startBtn.removeAttribute('disabled')
     }, 1500);
 })
   
-
+function downloadImg(){
+    var anchor = document.createElement("a");
+    anchor.href = this.src
+    anchor.download = "expression.png";
+    anchor.click();
+}
