@@ -1,4 +1,4 @@
-let exp
+let exp 
 let expressions = ["neutral", "happy","sad","angry","fearful","disgusted","surprised"]
 let ready = false
 let emoji = []
@@ -22,6 +22,8 @@ let yourExpression = document.querySelector("#exp")
 let first = document.querySelector("#first")
 let second = document.querySelector("#second")
 let third = document.querySelector("#third")
+let retakeImg = new Image;
+retakeImg.src = "src/assets/Restart.svg"
 
 // Load all expression image 
 var expList = {}
@@ -155,6 +157,7 @@ function capture(){
     setEmojiCamera()
     if(img >= 3) {
         // Stop 
+        exp = "undefined"
         ready = false
         localStream.getVideoTracks()[0].stop();
         video.src = '';
@@ -162,7 +165,7 @@ function capture(){
         yourExpression.parentElement.style.display = "none"
         video.style.display = "none"
         emojiCam.style.display = "none"
-        startBtn.firstChild.src = "src/assets/Restart.svg"
+        startBtn.firstChild.src = retakeImg.src
         startBtn.style.display = "block"
         randomBtn.style.display = "block"
         downloadBtn.style.display = "block"
