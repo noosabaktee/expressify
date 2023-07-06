@@ -13,7 +13,7 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div id="loading" style="position: absolute;top: 50%;left: 50%;transform: translate(-50%, -50%);">Loading......</div>
+  <div id="loading" style="position: absolute;top: 50%;left: 50%;transform: translate(-50%, -50%);font-weight: bolder;">Loading......</div>
   <section id="content" style="display: none;">
 
     <h1 id="title">Expressify Mood <br> 😂😡😭🙂😮🤮😨 </h1>
@@ -41,7 +41,7 @@
         <div class="webcam">
           <div class="center-el-webcam">
             <button class="play-btn" disabled><img src="src/assets/Take.svg" alt="" width="100"></button>
-            <h1 id="timer" style="color: white;"></h1>
+            <h1 id="timer" style="color: white;font-size: 32px;"></h1>
           </div>
           <button id="random-btn">random emoji</button>
           <p style="color: black;position: absolute;top:-12px;left: 5px;background-color: white;padding: 5px;border-radius: 3px;opacity: 50%;display: none;">your expression: <span id="exp">undefined</span></p>
@@ -49,20 +49,30 @@
           <video id="video" width="100%" height="100%" autoplay muted style="display: none;"></video>
         </div>
         <!-- end camera -->
-        
+
         <!-- result img -->
         <div id="result-img"></div>
         <!-- end result img -->
-      
         <button id="capture-btn" style="display: none;">Capture</button>
         <button id="download-btn">Download</button>
+
+        <!-- Theme -->
+        <p style="color: #2051CF" id="theme-text"><b>Choose Your Theme</b></p>
+        <div class="theme">
+          <img src="src/assets/preview/Emoji.svg" class="selected" width="110px" onclick="select(this)" alt="Emoji">
+          <img src="src/assets/preview/Animal.svg" width="110px" onclick="select(this)" alt="Animal">
+          <img src="src/assets/preview/Food.svg" width="110px" onclick="select(this)" alt="Food">
+          <img src="src/assets/preview/Sport.svg" width="110px" onclick="select(this)" alt="Sport">
+        </div>
+        <!-- end theme -->
+      
         <footer style="text-align: center;">
           <p><b>Made with ❤️ by </b><a href="https://instagram.com/noosabaktee" target="_blank" style="text-decoration: none;color: 2051CF;">Rama Nusa Bakti</a></p>
         </footer>
       </div>
     </div>
     <br>
-    <canvas id="canvas" width="1200" height="3400" style="width: 100%;display: none;"></canvas>
+    <canvas id="canvas" width="1200" height="4000" style="width: 100%;display: none;"></canvas>
 
   </section>
   <script defer src="capture.js"></script>

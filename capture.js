@@ -3,6 +3,7 @@ let expressions = ["neutral", "happy","sad","angry","fearful","disgusted","surpr
 let ready = false
 let emoji = []
 let canvas = document.querySelector("#canvas");
+let theme = "Emoji"
 let img = 0
 let time = 3
 
@@ -32,7 +33,7 @@ for(i of expressions){
 
 // add background
 var background = new Image();
-background.src = "src/assets/bg.svg";
+background.src = `src/assets/${theme}.svg`;
 background.onload = function(){
     canvas.getContext('2d').drawImage(background, 0, 0, canvas.width, canvas.height);
 }
@@ -72,8 +73,8 @@ Promise.all([
                                 capture()
                             }else if(time > 0){
                                 time -= 1
+                                timerCam.innerHTML = time + 1
                             }         
-                            timerCam.innerHTML = time + 1
                         }
                     }else{
                         time = 3
@@ -136,11 +137,12 @@ function capture(){
         // Url hasil
         image_data_url = canvas.toDataURL('image/jpeg',3);
 
-        // Add photo to result img
+        // Add photo and emoji to result img
         var imgCap = document.createElement("canvas")
         imgCap.width = video.width*5
         imgCap.height = video.height*5
         imgCap.getContext('2d').drawImage(video, 0, 0, video.width*5, video.height*5);
+        imgCap.getContext('2d').drawImage(emojiPic, 20, 375, 100, 100);
         var imgEl = document.createElement("img")
         imgEl.style.width = "30%"
         imgEl.style.margin = "0 10px"
@@ -243,9 +245,48 @@ randomBtn.addEventListener("click", function(){
     }, 1500);
 })
   
+// Download every image
 function downloadImg(){
     var anchor = document.createElement("a");
     anchor.href = this.src
     anchor.download = "expression.png";
     anchor.click();
+}
+
+// Fungsi untuk mendapatkan sibling
+function getSiblings(n, skipMe){
+    var parent = n.parentElement
+    var children = parent.children
+    var sibling = []
+    for(c of children){
+        if(c != n){
+            sibling.push(c)
+        }
+    }
+    return sibling
+};
+
+
+// Select theme
+function select(n){
+    // Jika sudah ready take tidak bisa ganti background
+    if(ready){
+        return false
+    }
+    var sibiling = getSiblings(n)
+    for(s of sibiling){
+        s.removeAttribute("class")
+    }
+    n.setAttribute("class","selected")
+    theme = n.getAttribute("alt")
+    var themeColor = {"Emoji":"#2051CF","Animal":"#F52E12","Food":"#008E39","Sport":"#1C1919"}
+    for(let key in themeColor){
+        if(theme == key){
+            document.querySelector("#theme-text").style.color = themeColor[theme]
+        }
+    }
+    background.src = `src/assets/${theme}.svg`;
+    background.onload = function(){
+        canvas.getContext('2d').drawImage(background, 0, 0, canvas.width, canvas.height);
+    }
 }
