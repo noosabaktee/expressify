@@ -90,7 +90,7 @@ Promise.all([
 
 
 function startVideo() {
-    navigator.getUserMedia(
+    navigator.mediaDevices.getUserMedia(
       { video: {width: 500, height: 500} },
       stream => {
         window.localStream = stream;
